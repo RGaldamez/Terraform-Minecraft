@@ -1,0 +1,14 @@
+sudo apt-get update 
+sudo apt-get install openjdk-8-jdk -y && sudo apt-get install openjdk-8-jre -y
+
+curl https://launcher.mojang.com/v1/objects/bb2b6b1aefcd70dfd1892149ac3a215f6c636b07/server.jar > server.jar
+java -Xmx720M -Xms720M -jar server.jar nogui
+curl http://169.254.169.254/latest/meta-data/public-hostname > hostname.txt
+sed -i 's/eula=false/eula=true/g' eula.txt
+sed -i 's/motd=A Minecraft Server/motd=Ricks Server/g' server.properties
+sed -i 's/online-mode=true/online-mode=false/g' server.properties
+sed -i "/server-ip=/s/$/$(cat hostname.txt)/" server.properties
+java -Xmx720M -Xms720M -jar /home/ubuntu/server.jar nogui
+
+
+port = 25565
